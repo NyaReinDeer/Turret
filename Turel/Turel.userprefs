@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Turret.cs">
     <Files>
+      <File FileName="Assets\Scripts\Turret.cs" Line="22" Column="31" />
       <File FileName="..\New Unity Project 5\Assets\Prefabs\2D Assets Pack\Scripts\2D Platformer\ArmRotation.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\Boom.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Bullet.cs" Line="8" Column="15" />
-      <File FileName="Assets\Scripts\Turret.cs" Line="65" Column="5" />
+      <File FileName="Assets\Scripts\Bullet.cs" Line="5" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

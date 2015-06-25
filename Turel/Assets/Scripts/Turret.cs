@@ -19,7 +19,7 @@ public class Turret : MonoBehaviour {
 	public Text realCount;
 	private int real;
 	private Quaternion actualRotation;
-	private float speedRotation=10.0f,deltaScope=0.01f,time,timerFlash=1f;
+	private float speedRotation=2.0f,deltaScope=0.01f,time,timerFlash=1f;
 	private bool started=true,lowFire=true;
 	private Vector2 dif;
 	void Start () {
@@ -28,12 +28,9 @@ public class Turret : MonoBehaviour {
 		enemy.position = targetPosition;
 		actualRotation=Quaternion.Euler(new Vector3(0.0f,0.0f,firstAngle));
 		speedShoot = 1 / speedShoot;
+		time=CalculateTime();
 	}
 	void Update () {
-		/*Подсчет времени, обновление позиции прицела, вычисление угла*/
-		time=CalculateTime();
-		Snipe ();
-		actualRotation=Calculate();
 		/*Движение цели и обновление угла у турели в рантайме*/
 		enemy.Translate (new Vector2 (targetSpeed, 0.0f) * Time.deltaTime);
 		turret.localRotation = Quaternion.RotateTowards (turret.transform.localRotation, actualRotation, speedRotation);
@@ -42,7 +39,13 @@ public class Turret : MonoBehaviour {
 			if(Mathf.Abs(turret.localRotation.z - actualRotation.z)<deltaScope){
 				started = false;
 			}
-		} else if(real>0) {
+		} else if(real>0 && time>=0) {
+			/*Подсчет времени, обновление позиции прицела, вычисление угла*/
+			time=CalculateTime();
+			if (time >= 0) {
+				Snipe ();
+				actualRotation = Calculate ();
+			}
 			/*Условие статуса "наведен"*/
 			if(Mathf.Abs(turret.rotation.z - actualRotation.z)<deltaScope){
 				if(lowFire){
@@ -67,10 +70,11 @@ public class Turret : MonoBehaviour {
 		dx = enemy.position.x - turret.position.x;//локализуем врага относительно турели
 		dy = enemy.position.y - turret.position.y;
 		a=targetSpeed*targetSpeed-startSpeed*startSpeed;
+		a /= targetSpeed * targetSpeed;
 		b = 2 * dx;
 		c = dx * dx + dy * dy;
 		if (a == 0) {//если уравнение не квадр.
-			return -b / c;
+			return -c/b;
 		} else {
 			d = b * b - 4 * a * c;
 			if(d==0){//если дискр. равен нулю - решение одно
